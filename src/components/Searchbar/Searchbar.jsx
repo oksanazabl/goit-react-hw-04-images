@@ -5,21 +5,26 @@ import { alertEmptySearch } from '../../utils/alert'; // Import the alertEmptySe
 
 class Searchbar extends Component {
   state = {
-    q: '',
+    query: '',
   };
 
   handleInputChange = event => {
-    this.setState({ q: event.target.value.toLowerCase() });
+    this.setState({ query: event.target.value.toLowerCase() });
   };
 
   onHandleSubmit = event => {
-    const { q } = this.state;
     event.preventDefault();
-    if (q === '') {
-      return alertEmptySearch();
+
+    if (this.state.query.trim() === '') {
+      alertEmptySearch();
+      return;
     }
-    this.props.onSearch(this.state.q);
+
+    this.props.onSubmit(this.state.query);
+    this.setState({ query: '' });
   };
+
+  
 
   render() {
     return (
@@ -32,11 +37,11 @@ class Searchbar extends Component {
           <input
             className={css.SearchForm_input}
             type="text"
-            autoComplete="off"
+            // autoComplete="off"
             autoFocus
             placeholder="Search images..."
-            value={this.state.q}
-            onInput={this.handleInputChange}
+            value={this.state.query}
+            onChange={this.handleInputChange}
           />
         </form>
       </header>

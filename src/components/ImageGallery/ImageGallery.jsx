@@ -8,7 +8,9 @@ const ImageGallery = ({ images, onSelect }) => {
   const [bigPic, setBigPic] = useState("");
 
   const toggleModal = (pic) => {
+    console.log("Clicked image:", pic);
     setBigPic(pic);
+    console.log("bigPic state:", bigPic);
     setShowModal(!showModal);
   };
 
