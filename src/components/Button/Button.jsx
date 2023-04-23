@@ -1,14 +1,14 @@
 import css from './Button.module.css';
 import PropTypes from 'prop-types';
 
-const Button = ({ onLoadMore, hasMore }) => {
+const Button = ({ onLoadMore}) => {
   return (
     <div>
-      {hasMore && (
+      
         <button onClick={onLoadMore} className={css.Button}>
           Load more
         </button>
-      )}
+      
     </div>
   );
 };
