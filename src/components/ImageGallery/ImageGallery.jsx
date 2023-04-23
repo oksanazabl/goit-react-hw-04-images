@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageGalleryItem from "../ImageGalleryItem";
+import Modal from '../Modal';
 import css from './ImageGallery.module.css'
 
 const ImageGallery = ({ images, onSelect }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [bigPic, setBigPic] = useState("");
+
+  const toggleModal = (pic) => {
+    setBigPic(pic);
+    setShowModal(!showModal);
+  };
+
   return (
     <ul className={css.ImageGallery}>
       {images.map((image) => (
         <ImageGalleryItem
           key={image.id}
           image={image}
-          onSelect={onSelect}
+          onSelect={toggleModal}
         />
       ))}
+      {showModal && bigPic && (
+        <Modal onClose={toggleModal} pic={bigPic} />
+      )}
     </ul>
   );
 };

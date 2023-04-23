@@ -63,9 +63,11 @@ class App extends Component {
     this.setState({ selectedImage: image });
   };
 
-  handleCloseModal = () => {
-    this.setState({ selectedImage: null });
-  };
+  // handleCloseModal = () => {
+  //   this.setState({ selectedImage: null });
+  // };
+
+ 
 
   render() {
     const { images, isLoading, selectedImage } = this.state;
@@ -75,9 +77,7 @@ class App extends Component {
         <ImageGallery images={images} onSelect={this.handleImageSelect} />
         {isLoading && <Loader />}
         {images.length > 0 && <Button onLoadMore={this.handleLoadMore} />}
-        {selectedImage && (
-          <Modal image={selectedImage} onClose={this.handleCloseModal} />
-        )}
+        
       </>
     );
   }
