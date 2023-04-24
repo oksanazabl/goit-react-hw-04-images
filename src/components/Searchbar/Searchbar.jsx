@@ -12,14 +12,13 @@ class Searchbar extends Component {
     this.setState({ query: event.target.value.toLowerCase() });
   };
 
-  onHandleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
 
     if (this.state.query.trim() === '') {
       alertEmptySearch();
       return;
     }
-
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };
@@ -29,7 +28,7 @@ class Searchbar extends Component {
   render() {
     return (
       <header className={css.Searchbar}>
-        <form className={css.SearchForm} onSubmit={this.onHandleSubmit}>
+        <form className={css.SearchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.SearchForm__button}>
             <GoSearch style={{ width: 25, height: 25 }} />
           </button>
@@ -37,7 +36,7 @@ class Searchbar extends Component {
           <input
             className={css.SearchForm_input}
             type="text"
-            // autoComplete="off"
+            autoComplete="off"
             autoFocus
             placeholder="Search images..."
             value={this.state.query}

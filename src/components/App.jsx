@@ -1,5 +1,5 @@
  import { Component } from 'react';
-//  import {fetchImages} from '../utils/fetchImages';
+//  
 import Searchbar from './Searchbar';
 // import ImageGallery from './ImageGallery';
 // import Button from './Button';
@@ -16,7 +16,7 @@ class App extends Component {
       // selectedImage: null,
     }
  
-  //   onSubmit = query => {
+    // handlOnSubmit = query => {}
   //     this.setState({
   //       q: query,
   //       images: [],

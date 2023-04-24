@@ -1,23 +1,37 @@
-import React from "react";
-import css from './ImageGalleryItem.module.css'
+import React, { useState } from "react";
+import ImageGalleryItem from "../ImageGalleryItem";
+import Modal from '../Modal';
+import Loader from "components/Loader/Loader";
+import css from './ImageGallery.module.css'
 
-const ImageGalleryItem = ({ image, onSelect }) => {
-  const { webformatURL, tags, id } = image;
+const ImageGallery = ({ images }) => {
+  const [status, setStatus] = useState({
+    showModal: false,
+    bigPic: null,
+  });
 
-  const handleClick = () => {
-    onSelect(id);
+  const toggleModal = (pic) => {
+    setStatus({
+      showModal: !status.showModal,
+      bigPic: pic,
+    });
   };
 
   return (
-    <li className={CSS.ImageGalleryItem}>
-      <img
-        src={webformatURL}
-        alt={tags}
-        className={css.ImageGalleryItem_image}
-        onClick={handleClick}
-      />
-    </li>
+    <ul className={css.ImageGallery}>
+      {images.map((image) => (
+        <ImageGalleryItem
+          key={image.id}
+          image={{ ...image, webformatURL: image.smallImgURL }}
+          onSelect={() => toggleModal(image.largeImageURL)}
+        />
+      ))}
+
+      {status.showModal && status.bigPic && (
+        <Modal onClose={() => toggleModal(null)} pic={status.bigPic} />
+      )}
+    </ul>
   );
 };
 
-export default ImageGalleryItem;
+export default ImageGallery;
