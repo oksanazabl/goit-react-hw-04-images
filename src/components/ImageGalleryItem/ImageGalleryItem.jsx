@@ -1,37 +1,21 @@
-import React, { useState } from "react";
-import ImageGalleryItem from "../ImageGalleryItem";
-import Modal from '../Modal';
-import Loader from "components/Loader/Loader";
-import css from './ImageGallery.module.css'
+import React, { Component } from 'react';
+import css from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
-const ImageGallery = ({ images }) => {
-  const [status, setStatus] = useState({
-    showModal: false,
-    bigPic: null,
-  });
+class ImageGalleryItem extends Component {
+  render() {
+    return (
+      <li className={css.ImageGalleryItem}>
+        <img src={this.props.smallImgURL} alt={this.props.id} />
+      </li>
+    );
+  }
+}
 
-  const toggleModal = (pic) => {
-    setStatus({
-      showModal: !status.showModal,
-      bigPic: pic,
-    });
-  };
 
-  return (
-    <ul className={css.ImageGallery}>
-      {images.map((image) => (
-        <ImageGalleryItem
-          key={image.id}
-          image={{ ...image, webformatURL: image.smallImgURL }}
-          onSelect={() => toggleModal(image.largeImageURL)}
-        />
-      ))}
-
-      {status.showModal && status.bigPic && (
-        <Modal onClose={() => toggleModal(null)} pic={status.bigPic} />
-      )}
-    </ul>
-  );
+ImageGalleryItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  smallImgURL: PropTypes.string.isRequired,
 };
 
-export default ImageGallery;
+export default ImageGalleryItem;

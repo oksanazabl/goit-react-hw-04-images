@@ -13,18 +13,24 @@ class Modal extends Component {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown = e => {
-    if (e.code === 'Escape') {
+  handleKeyDown = event => {
+    if (event.code === 'Escape') {
       return this.props.onClose();
     }
   };
 
+  handleBackdropClick = event => {
+       if (event.currentTarget === event.target) {
+      this.props.onClose();
+    }
+  };
 
   render() {
     return createPortal(
-      <div className={css.Overlay} >
+      <div className={css.Overlay} nClick={this.handleBackdropClick} >
         <div className={css.Modal}>
-        <img src={this.props.pic} alt="" />
+        {this.props.children}
+        {/* <img src={this.props.pic} alt="" /> */}
         </div>
       </div>,
       modalRoot

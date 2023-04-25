@@ -23,16 +23,10 @@ class Searchbar extends Component {
     this.setState({ query: '' });
   };
 
-  
-
   render() {
     return (
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleSubmit}>
-          <button type="submit" className={css.SearchForm__button}>
-            <GoSearch style={{ width: 25, height: 25 }} />
-          </button>
-
           <input
             className={css.SearchForm_input}
             type="text"
@@ -42,6 +36,9 @@ class Searchbar extends Component {
             value={this.state.query}
             onChange={this.handleInputChange}
           />
+          <button type="submit" className={css.SearchForm__button}>
+            <GoSearch style={{ width: 25, height: 25 }} />
+          </button>
         </form>
       </header>
     );
