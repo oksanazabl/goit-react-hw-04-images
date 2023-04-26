@@ -5,9 +5,7 @@ import ImageGallery from './ImageGallery';
 import Button from './Button';
 import Loader from './Loader';
 import Modal from './Modal';
-import Container from './Container';
-
-
+// import Container from './Container';
 
 class App extends Component {
   state = {
@@ -27,40 +25,43 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(_, prevState) {
-    const { searchQuery, page } = this.state;
+ componentDidUpdate(_, prevState) {
+  const { searchQuery, page } = this.state;
 
-    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-      this.fetch(searchQuery, page);
+  if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+    this.fetch(page);
+  }
+}
+
+  fetch = page => {
+    const { searchQuery } = this.state; 
+    this.setState({ isLoading: true });
+
+    try {
+      fetchImages(searchQuery, page)
+        .then(response => {
+          const newImages = response.data.hits.map(image => ({
+            id: image.id,
+            key: image.id,
+            webformatURL: image.webformatURL,
+            largeImageURL: image.largeImageURL,
+            tags: image.tags,
+          }));
+
+          this.setState(prevState => ({
+            images:
+              page === 1 ? newImages : [...prevState.images, ...newImages],
+            isLoading: false,
+          }));
+        })
+        .catch(error => {
+          console.error('Error while fetching images', error);
+          this.setState({ isLoading: false });
+        });
+    } catch (error) {
+      console.error('Error while fetching images', error);
     }
-  }
-
-  fetch = (page) => {
-  this.setState({ isLoading: true });
-
-  try {
-    fetchImages(page)
-      .then(response => {
-        const newImages = response.data.hits.map(image => ({
-          id: image.id,
-          webformatURL: image.webformatURL,
-          largeImageURL: image.largeImageURL,
-          tags: image.tags,
-        }));
-
-        this.setState(prevState => ({
-          images: page === 1 ? newImages : [...prevState.images, ...newImages],
-          isLoading: false,
-        }));
-      })
-      .catch(error => {
-        console.error('Error while fetching images', error);
-        this.setState({ isLoading: false });
-      });
-  } catch (error) {
-    console.error('Error while fetching images', error);
-  }
-};
+  };
 
   handleSearch = query => {
     this.setState({
@@ -98,18 +99,18 @@ class App extends Component {
   };
 
   render() {
-    const {  images, isLoading, showModal, modalImage } =
-      this.state;
+    const { images, isLoading, showModal, modalImage } = this.state;
 
     return (
       <div>
         <Searchbar onSubmit={this.handleSearch} />
 
-        <Container>
+        <>
           {images.length > 0 && (
             <ImageGallery
               images={images}
               onImageClick={this.handleImageClick}
+              // key={prevState.images.id}
             />
           )}
 
@@ -118,7 +119,7 @@ class App extends Component {
           {images.length > 0 && !isLoading && (
             <Button onLoadMore={this.handleLoadMore} />
           )}
-        </Container>
+        </>
 
         {showModal && (
           <Modal modalImage={modalImage} onClose={this.handleCloseModal} />
