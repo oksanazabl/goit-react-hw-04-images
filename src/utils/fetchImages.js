@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { BASE_URL, API_KEY } from '../utils/const';
 
-axios.defaults.baseURL = BASE_URL;
-
-function fetchImages(query, page, perPage) {
-  const response =axios.get(
-    `?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${perPage}`
-  );
-  return response;
+function fetchImages(query, page) {
+  try {
+    const response = axios.get(
+      `${BASE_URL}/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&page=${page}&per_page=12`
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 }
 
 export default fetchImages;
