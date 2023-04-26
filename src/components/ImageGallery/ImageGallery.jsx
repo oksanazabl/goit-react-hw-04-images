@@ -1,28 +1,21 @@
 import ImageGalleryItem from "../ImageGalleryItem";
-import PropTypes from 'prop-types';
+import css from './ImageGallery.module.css'
 
 const ImageGallery = ({ images, showModal }) => {
   return (
-    <ul className="ImageGallery">
+    <ul className={css.ImageGallery}>
       {images.map(({ tags, webformatURL, id, largeImageURL }) => (
         <ImageGalleryItem
           showModal={showModal}
           modalUrl={largeImageURL}
           key={id}
-          url={webformatURL}
+          smallImgURL={webformatURL}  // Pass webformatURL as smallImgURL prop
           alt={tags}
+          id={id}
         />
       ))}
     </ul>
   );
-};
-
-ImageGallery.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object),
-};
-
-ImageGallery.defaultProps = {
-  images: [],
 };
 
 export default ImageGallery;

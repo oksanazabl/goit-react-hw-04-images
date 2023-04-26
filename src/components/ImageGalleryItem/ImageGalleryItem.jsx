@@ -1,21 +1,13 @@
-import React, { Component } from 'react';
 import css from './ImageGalleryItem.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-class ImageGalleryItem extends Component {
-  render() {
-    return (
-      <li className={css.ImageGalleryItem}>
-        <img src={this.props.smallImgURL} alt={this.props.id} />
-      </li>
-    );
-  }
-}
-
-
-ImageGalleryItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  smallImgURL: PropTypes.string.isRequired,
+const ImageGalleryItem = ({ smallImgURL, id, onClick }) => {
+  return (
+    <li className={css.ImageGalleryItem}>
+      <img src={smallImgURL} alt={id} onClick={onClick} />
+    </li>
+  );
 };
+
 
 export default ImageGalleryItem;
