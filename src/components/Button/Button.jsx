@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Button = ({ onLoadMore}) => {
   return (
-    <div>
+    <div className={css.Button_position} >
       
         <button onClick={onLoadMore} className={css.Button}>
           Load more

@@ -4,7 +4,7 @@ import css from './ImageGalleryItem.module.css';
 const ImageGalleryItem = ({ smallImgURL, id, onClick }) => {
   return (
     <li className={css.ImageGalleryItem}>
-      <img src={smallImgURL} alt={id} onClick={onClick} />
+      <img className={css.ImageGalleryItem_image} src={smallImgURL} alt={id} onClick={onClick} />
     </li>
   );
 };
