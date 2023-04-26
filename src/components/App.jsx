@@ -25,16 +25,16 @@ class App extends Component {
     }
   }
 
- componentDidUpdate(_, prevState) {
-  const { searchQuery, page } = this.state;
+  componentDidUpdate(_, prevState) {
+    const { searchQuery, page } = this.state;
 
-  if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-    this.fetch(page);
+    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+      this.fetch(page);
+    }
   }
-}
 
   fetch = page => {
-    const { searchQuery } = this.state; 
+    const { searchQuery } = this.state;
     this.setState({ isLoading: true });
 
     try {
@@ -77,7 +77,7 @@ class App extends Component {
     }));
   };
 
-  handleImageClick = id => {
+  handleGetLargeImage = id => {
     const { images } = this.state;
 
     const image = images.find(image => image.id === id);
@@ -89,6 +89,10 @@ class App extends Component {
       },
       showModal: true,
     });
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
   handleCloseModal = () => {
@@ -120,9 +124,10 @@ class App extends Component {
             <Button onLoadMore={this.handleLoadMore} />
           )}
         </>
-
         {showModal && (
-          <Modal modalImage={modalImage} onClose={this.handleCloseModal} />
+          <Modal onClose={this.handleCloseModal}>
+            <img src={modalImage.largeUrl} alt={modalImage.alt} />
+          </Modal>
         )}
       </div>
     );
