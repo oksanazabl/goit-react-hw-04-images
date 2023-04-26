@@ -1,18 +1,16 @@
-import ImageGalleryItem from "../ImageGalleryItem";
-import css from './ImageGallery.module.css'
+import ImageGalleryItem from '../ImageGalleryItem';
+import css from './ImageGallery.module.css';
 import { nanoid } from 'nanoid';
 
-const ImageGallery = ({ images,onGetLargeImage, showModal }) => {
+const ImageGallery = ({ images, onGetLargeImage }) => {
   return (
     <ul className={css.ImageGallery}>
-      {images.map(({ tags, webformatURL, id, largeImageURL }) => (
+      {images.map(({ tags, webformatURL }) => (
         <ImageGalleryItem
-          showModal={showModal}
-          modalUrl={largeImageURL}
           key={nanoid()}
-          smallImgURL={webformatURL}  // Pass webformatURL as smallImgURL prop
+          smallImgURL={webformatURL} // Pass webformatURL as smallImgURL prop
           alt={tags}
-         onGetLargeImage={onGetLargeImage}
+          onGetLargeImage={onGetLargeImage}
         />
       ))}
     </ul>

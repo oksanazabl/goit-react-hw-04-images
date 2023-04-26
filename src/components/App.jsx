@@ -14,7 +14,8 @@ class App extends Component {
     images: [],
     isLoading: false,
     showModal: false,
-    modalImage: {},
+    modalImage: '',
+   
   };
 
   componentDidMount() {
@@ -28,7 +29,10 @@ class App extends Component {
   componentDidUpdate(_, prevState) {
     const { searchQuery, page } = this.state;
 
-    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+    if (
+      prevState.searchQuery.trim() !== searchQuery ||
+      prevState.page !== page
+    ) {
       this.fetch(page);
     }
   }
@@ -77,30 +81,21 @@ class App extends Component {
     }));
   };
 
-  handleGetLargeImage = id => {
-    const { images } = this.state;
-
-    const image = images.find(image => image.id === id);
-
-    this.setState({
-      modalImage: {
-        largeUrl: image.largeImageURL,
-        alt: image.tags,
-      },
-      showModal: true,
-    });
+  handleGetLargeImage = event => {
+    this.setState({ modalImage: event });
   };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
+    console.log('open modal');
   };
 
-  handleCloseModal = () => {
-    this.setState({
-      showModal: false,
-      modalImage: {},
-    });
-  };
+  // handleCloseModal = () => {
+  //   this.setState({
+  //     showModal: false,
+  //     modalImage: {},
+  //   });
+  // };
 
   render() {
     const { images, isLoading, showModal, modalImage } = this.state;
@@ -113,7 +108,7 @@ class App extends Component {
           {images.length > 0 && (
             <ImageGallery
               images={images}
-              onImageClick={this.handleImageClick}
+              onImageClick={this.handleGetLargeImage}
               // key={prevState.images.id}
             />
           )}
@@ -125,9 +120,7 @@ class App extends Component {
           )}
         </>
         {showModal && (
-          <Modal onClose={this.handleCloseModal}>
-            <img src={modalImage.largeUrl} alt={modalImage.alt} />
-          </Modal>
+          <Modal onClose={this.toggleModal} src={modalImage} alt={''} />
         )}
       </div>
     );
