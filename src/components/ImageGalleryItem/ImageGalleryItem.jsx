@@ -1,15 +1,23 @@
 import css from './ImageGalleryItem.module.css';
-// import PropTypes from 'prop-types';
 
-const ImageGalleryItem = ({ smallImgURL, alt, onGetLargeImage }) => (
-  <li className={css.ImageGalleryItem}>
-    <img
-      src={smallImgURL}
-      alt={alt}
-      className={css.ImageGalleryItem_image}
-      onClick={onGetLargeImage} // update to onGetLargeImage
-    />
-  </li>
-);
+const ImageGalleryItem = ({
+  smallImgURL,
+  alt,
+  largeImageURL,
+  onGetLargeImage,
+  toggleModal,
+}) => {
+  return (
+    <li
+      className={css.ImageGalleryItem}
+      onClick={() => {
+        onGetLargeImage({ largeImageURL: largeImageURL });
+        toggleModal();
+      }}
+    >
+      <img src={smallImgURL} alt={alt} className={css.ImageGalleryItem_image} />
+    </li>
+  );
+};
 
 export default ImageGalleryItem;

@@ -31,9 +31,9 @@ class Modal extends Component {
       <div className={css.Overlay} onClick={this.handleBackdropClick} >
         <div className={css.Modal}>
         <img
-            src={modalImage.largeUrl}
+            src={modalImage.largeImageURL}
             alt=""
-            width="500px"
+            width="700px"
           />
         </div>
       </div>,

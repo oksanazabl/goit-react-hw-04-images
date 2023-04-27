@@ -14,8 +14,8 @@ class App extends Component {
     images: [],
     isLoading: false,
     showModal: false,
-    modalImage: {},
-   
+    modalImage: '',
+    imageAlt: '',
   };
 
   componentDidMount() {
@@ -75,6 +75,14 @@ class App extends Component {
     });
   };
 
+  onGetLargeImage = event => {
+    this.setState({ modalImage: event });
+  };
+
+  largeImageUrl = event => {
+    this.setState({ imageAlt: event });
+  };
+
   handleLoadMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
@@ -108,8 +116,8 @@ class App extends Component {
           {images.length > 0 && (
             <ImageGallery
               images={images}
-              onImageClick={this.handleGetLargeImage}
-              // key={prevState.images.id}
+              onGetLargeImage={this.handleGetLargeImage}
+              toggleModal={this.toggleModal}
             />
           )}
 
@@ -120,7 +128,7 @@ class App extends Component {
           )}
         </>
         {showModal && (
-          <Modal onClose={this.toggleModal} modalImage={modalImage}  />
+          <Modal onClose={this.toggleModal} modalImage={modalImage} />
         )}
       </div>
     );
