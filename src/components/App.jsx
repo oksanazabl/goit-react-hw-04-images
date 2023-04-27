@@ -14,7 +14,7 @@ class App extends Component {
     images: [],
     isLoading: false,
     showModal: false,
-    modalImage: '',
+    modalImage: {},
    
   };
 
@@ -81,8 +81,8 @@ class App extends Component {
     }));
   };
 
-  handleGetLargeImage = event => {
-    this.setState({ modalImage: event });
+  handleGetLargeImage = image => {
+    this.setState({ modalImage: image });
   };
 
   toggleModal = () => {
@@ -120,7 +120,7 @@ class App extends Component {
           )}
         </>
         {showModal && (
-          <Modal onClose={this.toggleModal} src={modalImage} alt={''} />
+          <Modal onClose={this.toggleModal} modalImage={modalImage}  />
         )}
       </div>
     );
