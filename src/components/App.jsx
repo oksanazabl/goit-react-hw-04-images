@@ -18,27 +18,27 @@ class App extends Component {
     imageAlt: '',
   };
 
-  componentDidMount() {
-    const { searchQuery, page } = this.state;
+  // componentDidMount() {
+  //   const { searchQuery, page } = this.state;
 
-    if (searchQuery) {
-      this.fetchImages(searchQuery, page);
-    }
-  }
+  //   if (searchQuery) {
+  //     this.fetchImages(searchQuery, page);
+  //   }
+  // }
 
   componentDidUpdate(_, prevState) {
     const { searchQuery, page } = this.state;
 
     if (
-      prevState.searchQuery.trim() !== searchQuery ||
+      prevState.searchQuery !== searchQuery ||
       prevState.page !== page
     ) {
-      this.fetch(page);
+      this.fetch();
     }
   }
 
-  fetch = page => {
-    const { searchQuery } = this.state;
+  fetch = () => {
+    const { searchQuery, page } = this.state;
     this.setState({ isLoading: true });
 
     try {
@@ -53,8 +53,7 @@ class App extends Component {
           }));
 
           this.setState(prevState => ({
-            images:
-              page === 1 ? newImages : [...prevState.images, ...newImages],
+            images: [...prevState.images, ...newImages],
             isLoading: false,
           }));
         })

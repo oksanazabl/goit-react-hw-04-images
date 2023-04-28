@@ -33,7 +33,7 @@ class Modal extends Component {
         <img
             src={modalImage.largeImageURL}
             alt=""
-            width="700px"
+            width="800px"
           />
         </div>
       </div>,
