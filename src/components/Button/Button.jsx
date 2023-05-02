@@ -5,7 +5,7 @@ const Button = ({ onLoadMore}) => {
   return (
     <div className={css.Button_position} >
       
-        <button onClick={onLoadMore} className={css.Button}>
+        <button type="button" onClick={onLoadMore} className={css.Button}>
           Load more
         </button>
       

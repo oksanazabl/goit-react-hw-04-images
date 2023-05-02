@@ -55,30 +55,30 @@ class App extends Component {
   //     console.error('Error while fetching images', error);
   //   }
   // };
-fetch = async () => {
-  const { searchQuery, page } = this.state;
-  this.setState({ isLoading: true });
+  fetch = async () => {
+    const { searchQuery, page, images } = this.state;
+    this.setState({ isLoading: true });
 
-  try {
-    const response = await fetchImages(searchQuery, page);
-    const newImages = response.data.hits.map(image => ({
-      id: image.id,
-      key: image.id,
-      webformatURL: image.webformatURL,
-      largeImageURL: image.largeImageURL,
-      tags: image.tags,
-    }));
+    try {
+      const response = await fetchImages(searchQuery, page);
+      const newImages = response.data.hits.map(image => ({
+        id: image.id,
+        key: image.id,
+        webformatURL: image.webformatURL,
+        largeImageURL: image.largeImageURL,
+        tags: image.tags,
+      }));
 
-    this.setState(prevState => ({
-      images: [...prevState.images, ...newImages],
-showButton: page < Math.ceil(response.data.total / 12),
-    }));
-  } catch (error) {
-    console.error('Error while fetching images', error);
-  } finally {
-    this.setState({ isLoading: false });
-  }
-};
+      this.setState(prevState => ({
+        images: [...prevState.images, ...newImages],
+        showButton: page < Math.ceil(images.total / 12) ? true : false,
+      }));
+    } catch (error) {
+      console.error('Error while fetching images', error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
 
   handleSearch = query => {
     this.setState({
@@ -119,7 +119,7 @@ showButton: page < Math.ceil(response.data.total / 12),
   // };
 
   render() {
-    const { images, isLoading, showModal, modalImage } = this.state;
+    const { images, isLoading, showModal, modalImage} = this.state;
 
     return (
       <div>
@@ -136,7 +136,7 @@ showButton: page < Math.ceil(response.data.total / 12),
 
           {isLoading && <Loader />}
 
-          {images.length < 0 && !isLoading && (
+          {images.length > 0 && !isLoading &&  (
             <Button onLoadMore={this.handleLoadMore} />
           )}
         </>
