@@ -16,55 +16,69 @@ class App extends Component {
     showModal: false,
     modalImage: '',
     imageAlt: '',
+    showButton: false,
   };
-
-  // componentDidMount() {
-  //   const { searchQuery, page } = this.state;
-
-  //   if (searchQuery) {
-  //     this.fetchImages(searchQuery, page);
-  //   }
-  // }
 
   componentDidUpdate(_, prevState) {
     const { searchQuery, page } = this.state;
 
-    if (
-      prevState.searchQuery !== searchQuery ||
-      prevState.page !== page
-    ) {
+    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
       this.fetch();
     }
   }
 
-  fetch = () => {
-    const { searchQuery, page } = this.state;
-    this.setState({ isLoading: true });
+  // fetch = () => {
+  //   const { searchQuery, page } = this.state;
+  //   this.setState({ isLoading: true });
 
-    try {
-      fetchImages(searchQuery, page)
-        .then(response => {
-          const newImages = response.data.hits.map(image => ({
-            id: image.id,
-            key: image.id,
-            webformatURL: image.webformatURL,
-            largeImageURL: image.largeImageURL,
-            tags: image.tags,
-          }));
+  //   try {
+  //     fetchImages(searchQuery, page)
+  //       .then(response => {
+  //         const newImages = response.data.hits.map(image => ({
+  //           id: image.id,
+  //           key: image.id,
+  //           webformatURL: image.webformatURL,
+  //           largeImageURL: image.largeImageURL,
+  //           tags: image.tags,
+  //         }));
 
-          this.setState(prevState => ({
-            images: [...prevState.images, ...newImages],
-            isLoading: false,
-          }));
-        })
-        .catch(error => {
-          console.error('Error while fetching images', error);
-          this.setState({ isLoading: false });
-        });
-    } catch (error) {
-      console.error('Error while fetching images', error);
-    }
-  };
+  //         this.setState(prevState => ({
+  //           images: [...prevState.images, ...newImages],
+  //           isLoading: false,
+  //         }));
+  //       })
+  //       .catch(error => {
+  //         console.error('Error while fetching images', error);
+  //         this.setState({ isLoading: false });
+  //       });
+  //   } catch (error) {
+  //     console.error('Error while fetching images', error);
+  //   }
+  // };
+fetch = async () => {
+  const { searchQuery, page } = this.state;
+  this.setState({ isLoading: true });
+
+  try {
+    const response = await fetchImages(searchQuery, page);
+    const newImages = response.data.hits.map(image => ({
+      id: image.id,
+      key: image.id,
+      webformatURL: image.webformatURL,
+      largeImageURL: image.largeImageURL,
+      tags: image.tags,
+    }));
+
+    this.setState(prevState => ({
+      images: [...prevState.images, ...newImages],
+showButton: page < Math.ceil(response.data.total / 12),
+    }));
+  } catch (error) {
+    console.error('Error while fetching images', error);
+  } finally {
+    this.setState({ isLoading: false });
+  }
+};
 
   handleSearch = query => {
     this.setState({
@@ -122,7 +136,7 @@ class App extends Component {
 
           {isLoading && <Loader />}
 
-          {images.length > 0 && !isLoading && (
+          {images.length < 0 && !isLoading && (
             <Button onLoadMore={this.handleLoadMore} />
           )}
         </>
