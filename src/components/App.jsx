@@ -56,7 +56,7 @@ class App extends Component {
   //   }
   // };
   fetch = async () => {
-    const { searchQuery, page, images } = this.state;
+    const { searchQuery, page } = this.state;
     this.setState({ isLoading: true });
 
     try {
@@ -71,7 +71,7 @@ class App extends Component {
 
       this.setState(prevState => ({
         images: [...prevState.images, ...newImages],
-        showButton: page < Math.ceil(images.total / 12) ? true : false,
+        showButton: page < Math.ceil(response.data.totalHits / 12),
       }));
     } catch (error) {
       console.error('Error while fetching images', error);
@@ -119,7 +119,7 @@ class App extends Component {
   // };
 
   render() {
-    const { images, isLoading, showModal, modalImage} = this.state;
+    const { images, isLoading, showModal, modalImage, showButton} = this.state;
 
     return (
       <div>
@@ -136,9 +136,9 @@ class App extends Component {
 
           {isLoading && <Loader />}
 
-          {images.length > 0 && !isLoading &&  (
+          {showButton &&
             <Button onLoadMore={this.handleLoadMore} />
-          )}
+          }
         </>
         {showModal && (
           <Modal onClose={this.toggleModal} modalImage={modalImage} />
