@@ -1,5 +1,4 @@
 import Notiflix from 'notiflix';
-// import '../css/main.css';
 
 export function alertFound(data) {
   Notiflix.Notify.success(`We are found ${data.totalHits} images.`);

@@ -13,8 +13,8 @@ const Button = ({ onLoadMore}) => {
   );
 };
 
-export default Button;
-
 Button.propTypes = {
   onLoadMore: PropTypes.func.isRequired,
 };
+
+export default Button;
