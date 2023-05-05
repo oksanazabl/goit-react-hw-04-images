@@ -14,15 +14,16 @@ toggleModal();
 
 return (
 <ul className={css.ImageGallery}>
-{images.map(({ id, webformatURL, tags }) => (
-<ImageGalleryItem
-key={id}
-smallImgURL={webformatURL}
-alt={tags}
-onGalleryItemClick={() => handleGalleryItemClick(id)}
-isActive={id === galleryId}
-/>
-))}
+  {images.map(({ id, webformatURL, tags, largeImageURL }) => (
+    <ImageGalleryItem
+      key={`${id}-${webformatURL}`}
+      smallImgURL={webformatURL}
+      alt={tags}
+      largeImageURL={largeImageURL}
+      onGalleryItemClick={() => handleGalleryItemClick(id)}
+      isActive={id === galleryId}
+    />
+  ))}
 </ul>
 );
 };

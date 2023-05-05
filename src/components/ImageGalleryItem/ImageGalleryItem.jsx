@@ -50,7 +50,7 @@ Fullscreen
 ImageGalleryItem.propTypes = {
 smallImgURL: PropTypes.string.isRequired,
 alt: PropTypes.string.isRequired,
-largeImageURL: PropTypes.string.isRequired,
+largeImageURL: PropTypes.string,
 onGalleryItemClick: PropTypes.func.isRequired,
 isActive: PropTypes.bool.isRequired,
 };
