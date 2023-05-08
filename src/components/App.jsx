@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import fetchImages from 'utils/fetchImages';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
@@ -17,6 +17,10 @@ function App() {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
+    if (!searchQuery){
+      return;
+    };
+
     const fetchData = async () => {
       setIsLoading(true);
 
@@ -83,15 +87,5 @@ function App() {
   );
 }
 
-App.propTypes = {
-  searchQuery: PropTypes.string,
-  page: PropTypes.number,
-  images: PropTypes.array,
-  isLoading: PropTypes.bool,
-  showModal: PropTypes.bool,
-  modalImage: PropTypes.string,
-  imageAlt: PropTypes.string,
-  showButton: PropTypes.bool,
-};
 
 export default App;
