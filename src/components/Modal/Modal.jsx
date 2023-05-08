@@ -44,9 +44,3 @@ largeImageURL: PropTypes.string.isRequired,
 };
 
 export default Modal;
-
-
-
-
-
-

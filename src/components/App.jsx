@@ -46,6 +46,7 @@ function App() {
     setSearchQuery(query);
     setPage(1);
     setImages([]);
+    setShowButton(false);
   };
 
   const handleGetLargeImage = image => {
@@ -60,31 +61,25 @@ function App() {
     setPage(prevPage => prevPage + 1);
   };
 
-  useEffect(() => {
-    setShowButton(false); // Приховуємо кнопку при першому запуску
-  }, []);
-
   return (
     <div>
-        <Searchbar onSubmit={handleSearch} />
+      <Searchbar onSubmit={handleSearch} />
 
-        <>
-          {searchQuery &&images.length > 0 && (
-            <ImageGallery
-              images={images}
-              onGetLargeImage={handleGetLargeImage}
-              toggleModal={toggleModal}
-            />
-          )}
-
-          {isLoading && <Loader />}
-
-          {showButton ? <Button onLoadMore={handleLoadMore} /> : null}
-        </>
-        {showModal && (
-          <Modal onClose={toggleModal} modalImage={modalImage} />
+      <>
+        {searchQuery && images.length > 0 && (
+          <ImageGallery
+            images={images}
+            onGetLargeImage={handleGetLargeImage}
+            toggleModal={toggleModal}
+          />
         )}
-      </div>
+
+        {isLoading && <Loader />}
+
+        {images.length > 0 && showButton && <Button onLoadMore={handleLoadMore} />}
+      </>
+      {showModal && <Modal onClose={toggleModal} modalImage={modalImage} />}
+    </div>
   );
 }
 
